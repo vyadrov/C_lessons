@@ -6,7 +6,7 @@ int main () {
 	lower = 0;
 	upper = 300;
 	step = 20;
-	fahr = Lower;
+	fahr = lower;
 	printf("Fahrengeit into Celsius table\n");
 	while (fahr <= upper) {
 		celsius = (5.0/9.0) * (fahr - 32.0);
