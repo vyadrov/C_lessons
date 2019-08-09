@@ -4,16 +4,17 @@
 #define no 0
 
 int main() {
-    int c, vi;
-    vi = no;
+    int c, s;
 
     while ((c = getchar()) != EOF) {
-        if (c == ' ' || c == '\t')
-            vi = yes;
-        if (vi == yes) {
-            c = '\n';
-            vi = no;
-        }
-        putchar(c);
+        if ((c == ' ' || c == '\t') && (s == ' ' || s == '\t'))
+            continue;
+        if ((c == ' ' && c == '\t') && (s != ' ' || s != '\t'))
+            putchar('\n');
+        if ((c != ' ' && c != '\t') && (s == ' ' || s == '\t'))
+            putchar('\n');
+        if ((c != ' ' || c != '\t') && (s != ' ' || s != '\t'))
+            putchar(c);
+        s = c;
     }
 }
