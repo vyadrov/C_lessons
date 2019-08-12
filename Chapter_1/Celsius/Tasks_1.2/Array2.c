@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define N 2
+#define N 4
 #define K 3
 
 
@@ -17,6 +17,33 @@ void sort_array(int array[][K]) {
 	}
 }
 
+int bigger_row_sum(int array[][K]) {
+	int sum_1 = 0, bigger_sum = 0;
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < K; j++)
+			sum_1 = sum_1 + array[i][j];
+		if (bigger_sum < sum_1)
+			bigger_sum = sum_1;
+		sum_1 = 0;		
+	}
+	return bigger_sum;
+}
+
+int min_column_sum(int array[][K]) {
+	int sum_1 = 0;
+	int min_sum;
+	for (int i = 0; i < K; i++){
+		for (int j = 0; j < N; j++)
+			sum_1 = sum_1 + array[j][i];
+		if (i == 0)
+			min_sum = sum_1;
+		if (min_sum > sum_1)
+			min_sum = sum_1;
+		sum_1 = 0;		
+	}
+	return min_sum;
+}
+
 int main(int argc, char* argv[]) {
 int i, j, array[N][K];
 printf ("Enter any values:\n");
@@ -30,6 +57,8 @@ for (i = 0; i < N; i++) {
 		printf("%d  ", array[i][j]);
 		printf ("\n");		
 	}
+	printf("Max sum of array's rows: %d\n", bigger_row_sum(array));
+	printf("Min sum of array's column: %d\n", min_column_sum(array));
 	printf("Your sorted array is: \n");
 	sort_array(array);
 	for (i = 0; i < N; i++) {
