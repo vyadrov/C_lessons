@@ -50,7 +50,7 @@ int min_column_sum(int array[][K]) {
 }
 
 int main(int argc, char* argv[]) {
-	int i, j, array[N][K];
+	int i, j;
 	printf ("Enter any values:\n");
 	for(i = 0; i < N; i++)
 		for (j = 0; j < K; j++)
