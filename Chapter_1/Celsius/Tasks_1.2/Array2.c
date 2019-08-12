@@ -3,7 +3,12 @@
 #define N 4
 #define K 3
 
-
+int array[N][K] = {
+	{1, 2, 3},
+	{4, 5, 6},
+	{7, 8, 9},
+	{10, 11, 12}
+};
 void sort_array(int array[][K]) {
 	int i, j;
 	for (i = 1; i < N*K; i++){
@@ -45,26 +50,26 @@ int min_column_sum(int array[][K]) {
 }
 
 int main(int argc, char* argv[]) {
-int i, j, array[N][K];
-printf ("Enter any values:\n");
-for(i = 0; i < N; i++)
-	for (j = 0; j < K; j++)
-		scanf ("%d", &array[i][j]);
-	printf("Your array is: \n");
-	
-for (i = 0; i < N; i++) {
-	for (j = 0; j < K; j++)
-		printf("%d  ", array[i][j]);
-		printf ("\n");		
-	}
-	printf("Max sum of array's rows: %d\n", bigger_row_sum(array));
-	printf("Min sum of array's column: %d\n", min_column_sum(array));
-	printf("Your sorted array is: \n");
-	sort_array(array);
+	int i, j, array[N][K];
+	printf ("Enter any values:\n");
+	for(i = 0; i < N; i++)
+		for (j = 0; j < K; j++)
+			scanf ("%d", &array[i][j]);
+		printf("Your array is: \n");
+		
 	for (i = 0; i < N; i++) {
 		for (j = 0; j < K; j++)
 			printf("%d  ", array[i][j]);
-			printf ("\n");
+			printf ("\n");		
 		}
-return 0;
+		printf("Max sum of array's rows: %d\n", bigger_row_sum(array));
+		printf("Min sum of array's column: %d\n", min_column_sum(array));
+		printf("Your sorted array is: \n");
+		sort_array(array);
+		for (i = 0; i < N; i++) {
+			for (j = 0; j < K; j++)
+				printf("%d  ", array[i][j]);
+				printf ("\n");
+			}
+	return 0;
 }
