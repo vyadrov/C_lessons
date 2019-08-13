@@ -15,10 +15,15 @@ int main() {
 	}
 
 	for (j = 0; j <= 15; j++) {
-		if (j <10)
-		printf(" %d: %d\n", j, array[j]);
+		if (array[j] == 0)
+			continue;
+		if (j < 10)
+			printf(" %d: ", j);		
 		else
-			printf("%d: %d\n", j, array[j]);
+			printf("%d: ", j);			
+		for (int k = 0; k < array[j]; k++)
+			printf("%c", '*');
+		printf("\n");
 	}
 
 	return 0;
