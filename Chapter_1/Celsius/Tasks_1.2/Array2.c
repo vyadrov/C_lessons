@@ -4,10 +4,10 @@
 #define K 3
 
 int array[N][K] = {
-	{1, 2, 3},
-	{4, 5, 6},
+	{15, 2, 63},
+	{4, 15, 65},
 	{7, 8, 9},
-	{10, 11, 12}
+	{10, 77, 32}
 };
 void sort_array(int array[][K]) {
 	int i, j;
@@ -50,15 +50,9 @@ int min_column_sum(int array[][K]) {
 }
 
 int main(int argc, char* argv[]) {
-	int i, j;
-	printf ("Enter any values:\n");
-	for(i = 0; i < N; i++)
-		for (j = 0; j < K; j++)
-			scanf ("%d", &array[i][j]);
-		printf("Your array is: \n");
-		
-	for (i = 0; i < N; i++) {
-		for (j = 0; j < K; j++)
+	
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < K; j++)
 			printf("%d  ", array[i][j]);
 			printf ("\n");		
 		}
@@ -66,8 +60,8 @@ int main(int argc, char* argv[]) {
 		printf("Min sum of array's column: %d\n", min_column_sum(array));
 		printf("Your sorted array is: \n");
 		sort_array(array);
-		for (i = 0; i < N; i++) {
-			for (j = 0; j < K; j++)
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < K; j++)
 				printf("%d  ", array[i][j]);
 				printf ("\n");
 			}
