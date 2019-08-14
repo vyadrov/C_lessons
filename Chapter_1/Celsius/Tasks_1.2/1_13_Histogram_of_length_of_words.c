@@ -16,7 +16,7 @@ int main() {
 			nc = 0;		
 		}
 	}
-	for (j = 0; j <= 15; j++) {
+	for (j = 0; j < 15; j++) {
 		if (array[j] == 0)
 			continue;
 		if (j < 10)
@@ -32,7 +32,7 @@ int main() {
 	printf("%c", '>');
 	printf("\n");
 	printf("%s", "   ");
-	for (j = 1; j <= 15; j++)
+	for (j = 1; j < 15; j++)
 		printf(" %d", j);
 
 	return 0;
