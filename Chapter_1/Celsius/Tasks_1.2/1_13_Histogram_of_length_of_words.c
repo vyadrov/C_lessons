@@ -9,12 +9,10 @@ int main() {
 	while ((c = getchar()) != EOF){
 		nc++;
 		if (c == ' ' || c == '\n' || c == '\t'){
-			if (nc > 15) {
+			if (nc > 15)
 				printf("You entered too long word. Please try again\n");
-				nc = 0;
-				continue;
-			}	
-			array[nc - 1]++;
+			else
+				array[nc - 1]++;
 			nc = 0;		
 		}
 	}
