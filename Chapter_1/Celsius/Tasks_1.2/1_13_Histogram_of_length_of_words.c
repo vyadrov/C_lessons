@@ -42,14 +42,20 @@ int main() {
 		else
 			printf("%d| ", j);			
 		for (int k = 0; k < array[j]; k++)
-			printf("%c ", '*');
+			if (k < 10)
+				printf("%c ", '*');
+			else
+				printf("%s ", " *");
 		printf("\n");		
 	}
 	
 	printf("%s", "   ");
 	int a = horizontalScale(array);
-	for (i = 1; i <= a; i++)
-		printf("%s", "--");
+	for (i = 0; i <= a; i++)
+		if (i < 10)
+			printf("%s", "--");
+		else
+			printf("%s", "---");
 	printf("%c", '>');
 	printf("\n");
 	printf("%s", "   ");
