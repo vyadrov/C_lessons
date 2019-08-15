@@ -1,65 +1,60 @@
 #include <stdio.h>
+#define N 15
 
-int horizontalScale(int array[]) {
-	int max, i;
-	max = array[0];
-	for (i = 0; i < 15; i++)
-		if (max < array[i])
-			max = array[i];
-	return max;
-}
-
-int maxHorizontalValue(int array[]) {
-	int max, i;
-	max = array[0];
-	for (i = 0; i < 15; i++)
-		if (max < array[i])
-			max = array[i];
-	return max;
-}
-
-int main() {
-	int c, i, j, nc;
+void wordScan(int array[N]) {
+	int c, i, nc;
 	nc = 0;
-	int array[15];
-	for (int i = 0; i < 15; i++)
+	for (int i = 0; i < N; i++)
 		array[i] = 0;
 	while ((c = getchar()) != EOF){
 		nc++;
 		if (c == ' ' || c == '\n' || c == '\t'){
-			if (nc > 15)
+			if (nc > N)
 				printf("You entered too long word. Please try again\n");
 			else
 				array[nc - 1]++;
 			nc = 0;		
 		}
 	}
-	for (j = 0; j < 15; j++) {
-		if (array[j] == 0)
+}
+
+void printHistogram(int array[N]) {
+	int j, i, max;
+	for (i = 0; i < N; i++) {
+		if (array[i] == 0)
 			continue;
-		if (j < 10)
-			printf(" %d| ", j);		
+		if (i < 10)
+			printf(" %d| ", i);		
 		else
-			printf("%d| ", j);			
-		for (int k = 0; k < array[j]; k++)
+			printf("%d| ", i);
+		for (j = 0; j < array[i]; j++)
 			printf("%s ", " *");
 		printf("\n");		
 	}
-	
-	printf("%s", "   ");
-	int a = horizontalScale(array);
-	for (i = 0; i <= a; i++)
+	max = array[0];
+	for (i = 0; i < N; i++)
+		if (max < array[i])
+			max = array[i];
+		for (i = 0; i <= max; i++)
 		printf("%s", "---");
-	printf("%c", '>');
-	printf("\n");
+	printf("%c\n", '>');
 	printf("%s", "   ");
-	int d = maxHorizontalValue(array);
-	for (i = 1; i <= d; i++)
-		if (i < 10)
-			printf("  %d", i);
-		else
-			printf(" %d", i);
-	printf("\n");
+	for (i = 0; i < N; i++)
+		if (max < array[i])
+			max = array[i];
+		for (i = 1; i <= max; i++)
+			if (i < 10)
+				printf("  %d", i);
+			else
+				printf(" %d", i);
+	printf("\n");	
+}
 
+int main() {
+	int array[N];
+	int a, j, i;
+	wordScan(array);
+	printHistogram(array);
+	
 	return 0;
 }
