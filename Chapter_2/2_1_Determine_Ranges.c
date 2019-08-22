@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#define N 8
+#define BITS_PER_BYTE 8
 
 void determineRanges(int x) {
 	char  min_signed_char, max_signed_char;
@@ -14,20 +14,20 @@ void determineRanges(int x) {
 	unsigned int max_unsigned_int;
 	unsigned long max_unsigned_long;
 	
-	min_signed_char = -(pow(2, (sizeof(char)*N - 1)));
-	max_signed_char = pow(2, (sizeof(char)*N - 1)) - 1;
-	min_signed_short = -(pow(2, (sizeof(short)*N - 1)));
-	max_signed_short = pow(2, (sizeof(short)*N - 1)) - 1;
-	min_signed_int = -(pow(2, (sizeof(int)*N - 1)));
-	max_signed_int = pow(2, (sizeof(int)*N - 1)) - 1;
-	min_signed_long = -(pow(2, (sizeof(long)*N - 1)));
-	max_signed_long = pow(2, (sizeof(long)*N - 1)) - 1;
-	min_signed_long_int = -(pow(2, (sizeof(long int)*N - 1)));
-	max_signed_long_int = pow(2, (sizeof(long int)*N - 1)) - 1;
-	max_unsigned_char = pow(2, sizeof(unsigned char)*N) - 1;
-	max_unsigned_short = pow(2, sizeof(unsigned short)*N) - 1;
-	max_unsigned_int = pow(2, sizeof(unsigned int)*N) - 1;
-	max_unsigned_long = pow(2, sizeof(unsigned long)*N) - 1;
+	min_signed_char = -(pow(2, (sizeof(char)*BITS_PER_BYTE - 1)));
+	max_signed_char = pow(2, (sizeof(char)*BITS_PER_BYTE - 1)) - 1;
+	min_signed_short = -(pow(2, (sizeof(short)*BITS_PER_BYTE - 1)));
+	max_signed_short = pow(2, (sizeof(short)*BITS_PER_BYTE - 1)) - 1;
+	min_signed_int = -(pow(2, (sizeof(int)*BITS_PER_BYTE - 1)));
+	max_signed_int = pow(2, (sizeof(int)*BITS_PER_BYTE - 1)) - 1;
+	min_signed_long = -(pow(2, (sizeof(long)*BITS_PER_BYTE - 1)));
+	max_signed_long = pow(2, (sizeof(long)*BITS_PER_BYTE - 1)) - 1;
+	min_signed_long_int = -(pow(2, (sizeof(long int)*BITS_PER_BYTE - 1)));
+	max_signed_long_int = pow(2, (sizeof(long int)*BITS_PER_BYTE - 1)) - 1;
+	max_unsigned_char = pow(2, sizeof(unsigned char)*BITS_PER_BYTE) - 1;
+	max_unsigned_short = pow(2, sizeof(unsigned short)*BITS_PER_BYTE) - 1;
+	max_unsigned_int = pow(2, sizeof(unsigned int)*BITS_PER_BYTE) - 1;
+	max_unsigned_long = pow(2, sizeof(unsigned long)*BITS_PER_BYTE) - 1;
 	printf("Minimum Signed Char %hhd\n", min_signed_char);
 	printf("Maximum Signed Char % hhd\n", max_signed_char);
 	printf("Minimum Signed Short %hd\n", min_signed_short);
