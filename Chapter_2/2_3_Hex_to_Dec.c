@@ -28,10 +28,17 @@ int htoi(char s[ARRAY_SIZE]) {
 }
 
 void scan_hex_number(char s[ARRAY_SIZE]) {
-	int array_element_index, input_digit;
+	int array_element_index, input_digit, count;
+    count = 0;
 	printf("Please enter any Hex number:\n");
-	for (array_element_index = 0; (input_digit = getchar()) != '\n'; array_element_index++)
+	for (array_element_index = 0; (input_digit = getchar()) != '\n'; array_element_index++){
 		s[array_element_index] = input_digit;
+        count++;
+        if (count > ARRAY_SIZE) {
+            printf("You entered too long number. Please try again\n");
+        return;
+        }
+    }    
 	s[array_element_index] = '\0';
 	printf("%s in Dec system is: %d\n", s, htoi(s));
 }
