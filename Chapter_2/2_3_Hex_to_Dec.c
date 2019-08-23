@@ -16,7 +16,7 @@ int htoi(char s[ARRAY_SIZE]) {
                 ++array_element_index;                 
         }
         else if (input_digit >= '0' && input_digit <= '9')
-            input_digit = input_digit + input_digit - '0';
+            coefficient = coefficient + input_digit - '0';
         else if (input_digit >= 'a' && input_digit <= 'f')
             coefficient = coefficient + 10 + (input_digit - 'a');
         else if (input_digit >= 'A' && input_digit <= 'F')
