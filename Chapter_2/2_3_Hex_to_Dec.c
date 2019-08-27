@@ -1,10 +1,11 @@
 #include <stdio.h>
-#define ARRAY_SIZE 10
+#include <string.h>
+#define ARRAY_SIZE 11
 
 
 
-int htoi(char s[ARRAY_SIZE]) {
-	int input_digit, array_element_index, coefficient;
+long htoi(char s[ARRAY_SIZE]) {
+	long input_digit, array_element_index, coefficient;
 	coefficient = 0;
 	for (array_element_index = 0; (input_digit = s[array_element_index]) != '\0'; ++array_element_index) {
         coefficient = coefficient * 16;
@@ -22,29 +23,25 @@ int htoi(char s[ARRAY_SIZE]) {
         else if (input_digit >= 'A' && input_digit <= 'F')
             coefficient = coefficient + 10 + (input_digit - 'A');
         else
-            return coefficient;
+            return coefficient;                      
     }
     return coefficient;
 }
 
 void scan_hex_number(char s[ARRAY_SIZE]) {
-	int array_element_index, input_digit, count;
-    count = 0;
-	printf("Please enter any Hex number:\n");
-	for (array_element_index = 0; (input_digit = getchar()) != '\n'; array_element_index++){
-		s[array_element_index] = input_digit;
-        count++;
-        if (count > ARRAY_SIZE) {
-            printf("You entered too long number. Please try again\n");
-        return;
-        }
-    }    
-	s[array_element_index] = '\0';
-	printf("%s in Dec system is: %d\n", s, htoi(s));
+    long input_digit;
+    printf("Please enter any Hex number:\n");
+    scanf("%11s", s);
+    input_digit = htoi(s);
+    if (strlen(s) >= ARRAY_SIZE) {
+        printf("You entered too long number. Please try again\n");
+    } else
+        printf("%s in Dec system is: %ld\n", s, input_digit);
+
 }
 
 int main (void) {
 	char s[ARRAY_SIZE];
-	scan_hex_number(s);
+    scan_hex_number(s);
 	htoi(s);
 }
