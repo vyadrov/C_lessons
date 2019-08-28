@@ -2,49 +2,46 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 #define ARRAY_SIZE 15
 
-void scan(char s1[ARRAY_SIZE], char s2[ARRAY_SIZE]) {
+void scan(char string1[ARRAY_SIZE], char string2[ARRAY_SIZE]) {
 	printf("Please enter any first word:\n");
-	scanf("%14s", s1);
-	if (strlen(s1) >= ARRAY_SIZE - 1) {
+	scanf("%14s", string1);
+	if (strlen(string1) >= ARRAY_SIZE - 1) {
         printf("You entered too long number. Please try again\n");
         exit(0);
     }
 	printf("Please enter any second word:\n");
-	scanf("%14s", s2);	
-    if (strlen(s2) >= ARRAY_SIZE - 1) {
+	scanf("%14s", string2);	
+    if (strlen(string2) >= ARRAY_SIZE - 1) {
         printf("You entered too long number. Please try again\n");
         exit(0);
     }
 }
 
-void squeeze(char s1[], char s2[], char s_out[]) {
-    int i, j, k;
-    k = 0;
-    for (i = 0; s1[i] != '\0'; i++) {
-    	for (j = 0; s2[j] != '\0'; j++) {
-    		if (s1[i] == s2[j])
+void squeeze(char string1[], char string2[], char result_string[]) {
+    int string1_element_index, string2_element_index, result_string_element_index;
+    result_string_element_index = 0;
+    for (string1_element_index = 0; string1[string1_element_index] != '\0'; string1_element_index++) {
+    	for (string2_element_index = 0; string2[string2_element_index] != '\0'; string2_element_index++) {
+    		if (string1[string1_element_index] == string2[string2_element_index])
     			break;
     	}
-    	if (s1[i] != s2[j]) {
-    		s_out[k] = s1[i];
-    	  	k++;
+    	if (string1[string1_element_index] != string2[string2_element_index]) {
+    		result_string[result_string_element_index] = string1[string1_element_index];
+    	  	result_string_element_index++;
     	}    	
     }
-    s_out[k] = '\0';
+    result_string[result_string_element_index] = '\0';
 }
 
 int main(void) {
-	char s_out[ARRAY_SIZE];
-
-    char s1[ARRAY_SIZE];
-    char s2[ARRAY_SIZE];
-    scan(s1, s2);
-    squeeze(s1, s2, s_out);
-    printf("Your final string is: %s\n", s_out);
-
+	char result_string[ARRAY_SIZE];
+    char string1[ARRAY_SIZE];
+    char string2[ARRAY_SIZE];
+    scan(string1, string2);
+    squeeze(string1, string2, result_string);
+    printf("Your final string is: %s\n", result_string);
     return 0;
 }
 
