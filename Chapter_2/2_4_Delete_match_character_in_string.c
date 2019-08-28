@@ -25,7 +25,7 @@ void scan(char string1[ARRAY_SIZE], char string2[ARRAY_SIZE]) {
 void squeeze(char string1[], char string2[], char result_string[]) {
     int i, j, k;
     k = 0;
-    
+
     for (i = 0; string1[i] != '\0'; i++) {
     	for (j = 0; string2[j] != '\0'; j++) {
     		if (string1[i] == string2[j])
