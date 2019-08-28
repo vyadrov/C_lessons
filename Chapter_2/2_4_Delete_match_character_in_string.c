@@ -2,17 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define ARRAY_SIZE 15
+#define ARRAY_SIZE 30
 
 void scan(char string1[ARRAY_SIZE], char string2[ARRAY_SIZE]) {
 	printf("Please enter any first word:\n");
-	scanf("%14s", string1);
+	scanf("%29s", string1);
+
 	if (strlen(string1) >= ARRAY_SIZE - 1) {
         printf("You entered too long number. Please try again\n");
         exit(0);
     }
+
 	printf("Please enter any second word:\n");
-	scanf("%14s", string2);	
+	scanf("%29s", string2);	
+
     if (strlen(string2) >= ARRAY_SIZE - 1) {
         printf("You entered too long number. Please try again\n");
         exit(0);
@@ -20,19 +23,20 @@ void scan(char string1[ARRAY_SIZE], char string2[ARRAY_SIZE]) {
 }
 
 void squeeze(char string1[], char string2[], char result_string[]) {
-    int string1_element_index, string2_element_index, result_string_element_index;
-    result_string_element_index = 0;
-    for (string1_element_index = 0; string1[string1_element_index] != '\0'; string1_element_index++) {
-    	for (string2_element_index = 0; string2[string2_element_index] != '\0'; string2_element_index++) {
-    		if (string1[string1_element_index] == string2[string2_element_index])
+    int i, j, k;
+    k = 0;
+    
+    for (i = 0; string1[i] != '\0'; i++) {
+    	for (j = 0; string2[j] != '\0'; j++) {
+    		if (string1[i] == string2[j])
     			break;
     	}
-    	if (string1[string1_element_index] != string2[string2_element_index]) {
-    		result_string[result_string_element_index] = string1[string1_element_index];
-    	  	result_string_element_index++;
+    	if (string1[i] != string2[j]) {
+    		result_string[k] = string1[i];
+    	  	k++;
     	}    	
     }
-    result_string[result_string_element_index] = '\0';
+    result_string[k] = '\0';
 }
 
 int main(void) {
