@@ -7,28 +7,18 @@
 
 void scan(char string1[ARRAY_SIZE], char string2[ARRAY_SIZE]) {
     printf("Please enter any first word:\n");
-<<<<<<< HEAD
     scanf("%" STRINGIFY(ARRAY_SIZE) "s", string1);
     fgets(string1, ARRAY_SIZE, stdin);
 
-    if (strlen(string1) >= ARRAY_SIZE) {
-=======
-    scanf("%29s", string1);
-
-    if (strlen(string1) >= ARRAY_SIZE - 1) {
->>>>>>> 9e68587d782d58d6cbccf734972322c95ec102f7
+    if (strlen(string1) >= ARRAY_SIZE) {    
         printf("You entered too long number. Please try again\n");
         exit(0);
     }
 
     printf("Please enter any second word:\n");
-<<<<<<< HEAD
     scanf("%" STRINGIFY(ARRAY_SIZE) "s", string2);
-    fgets(string2, ARRAY_SIZE, stdin); 
-=======
-    scanf("%29s", string2); 
->>>>>>> 9e68587d782d58d6cbccf734972322c95ec102f7
-
+    fgets(string2, ARRAY_SIZE, stdin);
+    
     if (strlen(string2) >= ARRAY_SIZE) {
         printf("You entered too long number. Please try again\n");
         exit(0);
