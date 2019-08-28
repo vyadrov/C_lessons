@@ -27,7 +27,7 @@ int sum(int array[]) {
 	return sum;
 }
 
-void insert_array(int array[]) {
+void sort_array(int array[]) {
 	int i;
 	for (i = 1; i < N; i++) {
 		int k = i;
@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
 		printf(" %d", array[i]);
 	printf("\n");
 	printf("Your sorted array is:");
-	insert_array(array);
+	sort_array(array);
 	for (i = 0; i < N; i++)
 		printf(" %d", array[i]);
 	printf("\n");
