@@ -11,7 +11,7 @@ int main(void) {
     int ret = -1;
     while(ret == -1) {
         printf("Please enter any uppercase character to convert in lower:\n");
-        scanf("%c", &c);
+        scanf("%c[^\n]", &c);        
         if ((ret = lower(c)) == -1)
             printf("It's not a letter, Try again.\n");
         else
