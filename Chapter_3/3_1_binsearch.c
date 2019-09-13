@@ -34,25 +34,42 @@ int classic_search_method(int x, int v[], int n) {
 }
 
 int main(void) {
-    int a;
+    int a, b, c;
+    a = 2;
+    b = ARRAY_SIZE / 2;
+    c = ARRAY_SIZE - 1;
     int array[ARRAY_SIZE];
     for (int i = 0; i < ARRAY_SIZE; i++) {
-        array[i] = i * 2;
+        array[i] = i;
         //printf("%d ", array[i]);
     }
-    printf("\n");
-    printf("Please enter number 'x' to find in array:\n");
-    scanf("%d", &a);
     clock_t tic = clock();
-    printf("Index of 'x' in array is: %d\n",binsearch(a,array,ARRAY_SIZE));
+    printf("Index of %d in array is: %d\n",a, binsearch(a,array,ARRAY_SIZE));
     clock_t toc = clock();
     printf("Elapsed: %f seconds for binsearch method\n", (double)(toc - tic) / CLOCKS_PER_SEC);
-    printf("Please enter number 'x' to find in array:\n");
-    scanf("%d", &a);
     clock_t pic = clock();
-    printf("Index of 'x' in array is: %d\n", classic_search_method(a, array, ARRAY_SIZE));
+    printf("Index of %d in array is: %d\n", a, classic_search_method(a, array, ARRAY_SIZE));
     clock_t poc = clock();
     printf("Elapsed: %f seconds for classic search method\n", (double)(poc - pic) / CLOCKS_PER_SEC);
+    printf("==============================================================\n");
+    clock_t sic = clock();
+    printf("Index of %d in array is: %d\n",b, binsearch(b, array, ARRAY_SIZE));
+    clock_t soc = clock();
+    printf("Elapsed: %f seconds for binsearch method\n", (double)(soc - sic) / CLOCKS_PER_SEC);
+    clock_t bic = clock();
+    printf("Index of %d in array is: %d\n", b, classic_search_method(b, array, ARRAY_SIZE));
+    clock_t boc = clock();
+    printf("Elapsed: %f seconds for classic search method\n", (double)(boc - bic) / CLOCKS_PER_SEC);
+    printf("==============================================================\n");
+    clock_t ric = clock();
+    printf("Index of %d in array is: %d\n", c, binsearch(c,array,ARRAY_SIZE));
+    clock_t roc = clock();
+    printf("Elapsed: %f seconds for binsearch method\n", (double)(roc - ric) / CLOCKS_PER_SEC);
+    clock_t fic = clock();
+    printf("Index of %d in array is: %d\n", c, classic_search_method(c, array, ARRAY_SIZE));
+    clock_t foc = clock();
+    printf("Elapsed: %f seconds for classic search method\n", (double)(foc - fic) / CLOCKS_PER_SEC);
+    printf("==============================================================\n");
 
     return 0;
 }
