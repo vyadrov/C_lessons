@@ -1,18 +1,27 @@
-#include<stdio.h>
+#include <stdio.h>
 #include <ctype.h>
 #include <string.h>
 
 #define BUF_SIZE 30
 #define MAX_ARRAY_SIZE_S1 100
 #define MAX_ARRAY_SIZE_S2 1000
+
+int isvalid(char start, char finish) {
+    return (start < finish &&
+            ( (isdigit(start) && isdigit(finish)) ||
+              (isupper(start) && isupper(finish)) ||
+              (islower(start) && islower(finish)) ));
+}
+
+int isrange(char a, char b, char c) {
+    return (isalnum(a) &&
+            b == '-' && isalnum(c) );
+}
+
 int printrange(char s[], char start, char finish) {
     int i, j;
     j = 0;
-    if (start < finish &&
-        ( (isdigit(start) && isdigit(finish)) ||
-          (isupper(start) && isupper(finish)) ||
-          (islower(start) && islower(finish)) )
-        )
+    if (isvalid(start, finish))
     {
         for (i = start; i <= finish; i++)
         {
@@ -34,10 +43,7 @@ void pars(char s[], char s_out[]) {
     int i;
     char buf[BUF_SIZE];
     for (i = 0; s[i] != '\0'; i++) {
-        if (
-            (isdigit(s[i]) || isalpha(s[i])) &&
-            s[i + 1] == '-' && s[i + 2] != '\0' &&
-            (isdigit(s[i + 2]) || isalpha(s[i + 2])) )
+        if (isrange(s[i], s[i + 1], s[i + 2]))
         {
             printrange(buf, s[i], s[i + 2]);
             strcat(s_out, buf);
@@ -53,7 +59,7 @@ void pars(char s[], char s_out[]) {
 }
 
 int main(void) {
-    char s1[MAX_ARRAY_SIZE_S1] = "---a-J-";
+    char s1[MAX_ARRAY_SIZE_S1] = "---a-ehjkl";
     char s2[MAX_ARRAY_SIZE_S2];
     for (int i = 0; i < MAX_ARRAY_SIZE_S2; i++)
         s2[i] = 0;
