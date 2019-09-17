@@ -61,7 +61,9 @@ int main(void) {
 #include <ctype.h>
 #include <string.h>
 
-#define MAX_ARRAY_SIZE 100
+#define BUF_SIZE 30
+#define MAX_ARRAY_SIZE_S1 100
+#define MAX_ARRAY_SIZE_S2 1000
 
 int printrange(char s[], char start, char finish) {
     int i, j;
@@ -90,7 +92,7 @@ int printrange(char s[], char start, char finish) {
 
 void pars(char s[], char s_out[]) {
     int i;
-    char buf[30];
+    char buf[BUF_SIZE];
     for (i = 0; s[i] != '\0'; i++) {
         if (
             (isdigit(s[i]) || isalpha(s[i])) &&
@@ -111,8 +113,8 @@ void pars(char s[], char s_out[]) {
 }
 
 int main(void) {
-    char s1[200] = "---a-m-0-9-";
-    char s2[MAX_ARRAY_SIZE];
+    char s1[MAX_ARRAY_SIZE_S1] = "---a-m-0-9-";
+    char s2[MAX_ARRAY_SIZE_S2];
     pars(s1, s2);
     printf("%s\n", s2);
 }
