@@ -55,6 +55,8 @@ void pars(char s[], char s_out[]) {
 int main(void) {
     char s1[MAX_ARRAY_SIZE_S1] = "---a-J-";
     char s2[MAX_ARRAY_SIZE_S2];
+    for (int i = 0; i < MAX_ARRAY_SIZE_S2; i++)
+        s2[i] = 0;
     pars(s1, s2);
     printf("S2 - %s\n", s2);
 }
