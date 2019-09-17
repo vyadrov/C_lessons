@@ -3,8 +3,8 @@
 #include <string.h>
 
 #define BUF_SIZE 30
-#define MAX_ARRAY_SIZE_S1 100
-#define MAX_ARRAY_SIZE_S2 1000
+#define MAX_INITIAL_STRING_SIZE 100
+#define MAX_EXPANDED_STRING_SIZE 1000
 
 int is_valid(char start, char finish) {
     return (start < finish &&
@@ -13,9 +13,9 @@ int is_valid(char start, char finish) {
               (islower(start) && islower(finish)) ));
 }
 
-int is_range(char a, char b, char c) {
-    return (isalnum(a) &&
-            b == '-' && isalnum(c) );
+int is_range(char from, char range_symbol, char to) {
+    return (isalnum(from) &&
+            range_symbol == '-' && isalnum(to) );
 }
 
 int print_range(char s[], char start, char finish) {
@@ -39,19 +39,19 @@ int print_range(char s[], char start, char finish) {
     }
 }
 
-void pars(char s[], char s_out[]) {
+void pars(char s_in[], char s_out[]) {
     int i;
     char buf[BUF_SIZE];
-    for (i = 0; s[i] != '\0'; i++) {
-        if (is_range(s[i], s[i + 1], s[i + 2]))
+    for (i = 0; s_in[i] != '\0'; i++) {
+        if (is_range(s_in[i], s_in[i + 1], s_in[i + 2]))
         {
-            print_range(buf, s[i], s[i + 2]);
+            print_range(buf, s_in[i], s_in[i + 2]);
             strcat(s_out, buf);
             i+=2;
         }
         else
         {
-            buf[0] = s[i];
+            buf[0] = s_in[i];
             buf[1] = '\0';
             strcat(s_out, buf);
         }
@@ -59,9 +59,9 @@ void pars(char s[], char s_out[]) {
 }
 
 int main(void) {
-    char initial_string[MAX_ARRAY_SIZE_S1] = "---a-ehjkl";
-    char expanded_string[MAX_ARRAY_SIZE_S2];
-    for (int i = 0; i < MAX_ARRAY_SIZE_S2; i++)
+    char initial_string[MAX_INITIAL_STRING_SIZE] = "---a-ehjkl";
+    char expanded_string[MAX_EXPANDED_STRING_SIZE];
+    for (int i = 0; i < MAX_EXPANDED_STRING_SIZE; i++)
         expanded_string[i] = 0;
     pars(initial_string, expanded_string);
     printf("%s\n", expanded_string);
