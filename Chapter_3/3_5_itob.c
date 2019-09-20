@@ -16,15 +16,18 @@ void reverse(char string[]) {
     }
 }
 
-void itoa(int number, char string[]) {
+void itob(int number, char string[], int base) {
     int i, sign;
 
     sign = number;
     i = 0;
 
     do {
-        string[i++] = abs(number % 10) + '0';
-    } while ((number /= 10) != 0);
+        if (number % base <= 9)
+            string[i++] = (number % base) + '0';
+        else
+            string[i++] = (number % base) + 'A' - 10;
+    } while ((number /= base) != 0);
     if (sign < 0)
         string[i++] = '-';
     string[i] = '\0';
@@ -33,6 +36,6 @@ void itoa(int number, char string[]) {
 
 int main(void) {
     char string[ARRAY_SIZE];
-    itoa(-2147483648, string);
+    itob(36, string, 16);
     printf("%s\n", string);
 }
