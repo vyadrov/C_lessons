@@ -5,7 +5,7 @@ int strindex(char source_string[], char pattern[])
     int i, j, k, right_index;
     right_index = -1;
     for (i = 0; source_string[i] != '\0'; i++) {
-        for (j = i, k = 0; pattern[k] != '\0' && source_string[j] == pattern[k]; j++, k++);
+        for (j = i, k = 0; pattern[k] != '\0' && (source_string[j] == pattern[k] || pattern[k] == '*'); j++, k++);
         if (k > 0 && pattern[k] == '\0')
             right_index = i;
     }
@@ -14,13 +14,10 @@ int strindex(char source_string[], char pattern[])
 
 
 int main(void) {
-    char pattern[] = "asd";    
-    char line[] = "asdfghjkasdrt";
+    char pattern[] = "asd*f";    
+    char line[] = "asdkfgotyhkasdufrt";
     int found = 0;
     
     found  = strindex(line, pattern);
     printf("Index of rightmost occurence in current pattern is: %d\n", found);
 }
-
-
-
