@@ -55,7 +55,7 @@ void ungetch(int);
 
 int getop(char string[])
 {
-    int i,symbol, temp = -1;
+    int i, symbol, temp = -1;
 
     while ((string[0] = symbol = getch()) == ' ' || symbol == '\t')
         ;
