@@ -1,7 +1,7 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
-#include<ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <ctype.h>
 #include <string.h>
 
 #define NAME 'n'
@@ -35,13 +35,13 @@ int freePositionInBuf = 0;
 
 void push(double f) {
     if(stackPosition < MAXVAL)
-        valueStack[stackPosition++]=f;
+        valueStack[stackPosition++] = f;
     else
         printf("error:stack full, cant push %g\n",f);
 }
 
 double pop(void) {
-    if(stackPosition>0)
+    if (stackPosition > 0)
         return valueStack[--stackPosition];
     else
     {
@@ -55,47 +55,47 @@ void ungetch(int);
 
 int getop(char string[])
 {
-    int i,c, temp = -1;
+    int i,symbol, temp = -1;
 
-    while((string[0] = c = getch()) == ' ' || c =='\t')
+    while ((string[0] = symbol = getch()) == ' ' || symbol == '\t')
         ;
     string[1] = '\0';
-    if (!(isdigit(c) || c == '.' || (c == '-' && (isdigit(temp = getch()))))){
+    if (!(isdigit(symbol) || symbol == '.' || (symbol == '-' && (isdigit(temp = getch()))))){
         if (temp > 0){
             ungetch(temp);
             temp = -1;
         }
 
-        if (isalpha(c)){
+        if (isalpha(symbol)){
             i = 0;
-            while(isalpha(string[++i] = c = getch()))
+            while (isalpha(string[++i] = symbol = getch()))
                 ;
-            ungetch(c);
+            ungetch(symbol);
             string[i] = '\0';
             return NAME;
         }
 
-        return c;
+        return symbol;
     }
     else if (temp > 0){
         ungetch(temp);
         temp = -1;
     }
     i = 0;
-    if (c == '-')
-        string[++i] = c = getch();
+    if (symbol == '-')
+        string[++i] = symbol = getch();
 
-    if(isdigit(c))
-        while(isdigit(string[++i] = c = getch()))
+    if (isdigit(symbol))
+        while (isdigit(string[++i] = symbol = getch()))
             ;
 
-    if(c=='.')
-        while(isdigit(string[++i] = c = getch()))
+    if (symbol == '.')
+        while (isdigit(string[++i] = symbol = getch()))
             ;
     
     string[i] = '\0';
-    if(c!=EOF)
-        ungetch(c);
+    if (symbol != EOF)
+        ungetch(symbol);
     return NUMBER;
 }
 
@@ -103,11 +103,11 @@ int getch(void) {
     return (freePositionInBuf > 0) ? bufForUngetch[--freePositionInBuf] : getchar();
 }
 
-void ungetch(int c) {
-    if(freePositionInBuf >= BUFSIZE)
+void ungetch(int symbol) {
+    if (freePositionInBuf >= BUFSIZE)
         printf("ungetch: too many characters\n");
     else
-        bufForUngetch[freePositionInBuf++] = c;
+        bufForUngetch[freePositionInBuf++] = symbol;
 }
 
 int getOperationCode(char* string) {
@@ -145,9 +145,9 @@ int main(void) {
     double operator_1, operator_2;
     char string[MAXOP];
 
-    while((type = getop(string)) != EOF)
+    while ((type = getop(string)) != EOF)
     {
-        switch(type)
+        switch (type)
         {
                 case NUMBER:
                         push(atof(string));
@@ -185,7 +185,7 @@ int main(void) {
                                     break;
                             case TOP:
                                     operator_2 = pop();
-                                    printf("\t%-.8g\n",operator_2);
+                                    printf("\t%-.8g\n", operator_2);
                                     push(operator_2);
                                     break;
                             default:
@@ -194,14 +194,14 @@ int main(void) {
                         }
                         break;
                 case '+':
-                        push(pop()+pop());
+                        push(pop() + pop());
                         break;
                 case '*':
-                        push(pop()*pop());
+                        push(pop() * pop());
                         break;
                 case '-':
                         operator_2 = pop();
-                        push(pop()-operator_2);
+                        push(pop() - operator_2);
                         break;
                 case '/':
                         operator_2 = pop();
@@ -213,16 +213,16 @@ int main(void) {
                 case '%':
                         operator_2 = pop();
                         if(operator_2 != 0.0)
-                            push(fmod(pop(),operator_2));
+                            push(fmod(pop(), operator_2));
                         else
                             printf("error:zero divisor\n");
                         break;
                 
                 case '\n':
-                        printf("\t%-.8g\n",pop());
+                        printf("\t%-.8g\n", pop());
                         break;
                 default:
-                        printf("error: unknown command %s\n",string);
+                        printf("error: unknown command %s\n", string);
                         break;
 
         }
