@@ -5,16 +5,14 @@
 #define ARRAY_SIZE 100
 
 int itoa (int number, char string[]) {
-    
+
     int i = 0;
-    if (number < 0) {
-        putchar ('-');
-        number = -number;
-    }
 
     if (number / 10) {
         i = itoa(number / 10, string);
     }
+    else if (number < 0)
+        string[i++] = '-';
 
     string[i++] = abs(number) % 10 + '0';
     string[i] = '\0';
@@ -24,7 +22,7 @@ int itoa (int number, char string[]) {
 
 int main(void) {
 
-    int number = 542;
+    int number = -12542;
     char string[ARRAY_SIZE];
 
     itoa(number, string);
