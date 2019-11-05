@@ -4,7 +4,7 @@
 
 #define ARRAY_SIZE 100
 
-int reverse_recursive(char string[], int start) {
+static void reverse_recursive_internal(char string[], int start) {
     
     int end, temp;
     end = strlen(string) - 1 - start;
@@ -14,14 +14,17 @@ int reverse_recursive(char string[], int start) {
         string[start] = string[end];
         string[end] = temp;
 
-        reverse_recursive(string, ++start);
+        reverse_recursive_internal(string, ++start);
     }
+}
+void reverse_recursive(char string[]) {
+    reverse_recursive_internal(string, 0);
 }
 
 int main(void) {
 
     char string[ARRAY_SIZE] = "5423694";
 
-    reverse_recursive(string, 0);
+    reverse_recursive(string);
     printf("%s\n", string);
 }
