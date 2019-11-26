@@ -10,13 +10,8 @@ int strend(char *string1, char *string2) {
     if (strlen(string1) < string2_size)
         return 0;
 
-    while(*string1 != '\0')
-        string1++;
-    string1--;
-
-    while(*string2 != '\0')
-        string2++;
-    string2--;    
+    string1 += strlen(string1);
+    string2 += strlen(string2);    
 
     for (length = string2_size; length > 0; length--) {
         if (*string2 == *string1) {
