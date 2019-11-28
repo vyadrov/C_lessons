@@ -4,24 +4,20 @@
 
 #define ARRAY_SIZE 100
 
+void reverse(char *string) {
+    char *reverse_pointer, temp_symbol;    
 
-void reverse_pointer(char *string) {
-
-    char *temp, temp_symbol;
-    
-
-    for (temp = string + strlen(string) - 1; string < temp; string++, temp--) {
+    for (reverse_pointer = string + strlen(string) - 1; string < reverse_pointer; string++, reverse_pointer--) {
         temp_symbol = *string;
-        *string = *temp;
-        *temp = temp_symbol;
+        *string = *reverse_pointer;
+        *reverse_pointer = temp_symbol;
     }
 }
 
-int main(void) {
-    
+int main(void) {    
     char string[ARRAY_SIZE] = "abcde";
 
     printf("String before reverse: %s\n", string);
-    reverse_pointer(string);
+    reverse(string);
     printf("String after reverse: %s\n", string);
 }
