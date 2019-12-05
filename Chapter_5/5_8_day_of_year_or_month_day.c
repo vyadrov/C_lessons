@@ -52,7 +52,7 @@ int main(void) {
     int day_2;
 
     printf("For %d.%d.%d the Day is: %d\n", dat, month, year, day_of_year(year, month, dat));
-    printf("For %dth day in %d year, ", year_1, day_1);
+    printf("For %dth day in %d year, ", day_1, year_1);
     month_day(year_1, day_1, &month_2, &day_2);
     printf("the Month is = %d, the Day is = %d\n", month_2, day_2);
 }
