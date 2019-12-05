@@ -10,8 +10,8 @@ char lines[OVER_MAXLEN];
 
 int readlines(char *lineptr[], char lines[], int nlines);
 void writelines(char *lineptr[], int nlines);
-
 void qsort(char *lineptr[],int left,int right);
+void swap(char *lineptr[], int i, int j);
 
 /* sort input lines */
 
@@ -61,11 +61,17 @@ void writelines(char *lineptr[], int nlines) {
         printf("%s\n", lineptr[i]);
 }
 
+void swap(char *string[], int i, int j) {
+    char *temp;
+
+    temp = string[i];
+    string[i] = string[j];
+    string[j] = temp;
+}
 /* qsort: sort v[left] ... v[right] into increasing order */
 void qsort(char *lineptr[], int left, int right) {
     int i, last;
-    void swap(char *lineptr[], int i, int j);
-
+    
     if (left >= right)
         return;
     swap(lineptr, left, (left+right) / 2);
@@ -78,15 +84,6 @@ void qsort(char *lineptr[], int left, int right) {
     qsort(lineptr, left, last-1);
     qsort(lineptr, last+1, right);
 }
-
-void swap(char *string[], int i, int j) {
-    char *temp;
-
-    temp = string[i];
-    string[i] = string[j];
-    string[j] = temp;
-}
-
 
 int mgetline(char *line, int lim) {
     int symbol;
