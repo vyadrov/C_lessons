@@ -51,7 +51,7 @@ int main(void) {
     int month_2;
     int day_2;
 
-    printf("For 18.10.1970 the Day is: %d\n", day_of_year(year, month, dat));
+    printf("For %d.%d.%d the Day is: %d\n", dat, month, year, day_of_year(year, month, dat));
     printf("For 100th day in 2020 year, ");
     month_day(year_1, day_1, &month_2, &day_2);
     printf("the Month is = %d, the Day is = %d\n", month_2, day_2);
