@@ -1,13 +1,12 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
-#include<ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <ctype.h>
 
 #define MAXOP 100
 #define NUMBER '0'
 #define MAXVAL 100
 #define BUFSIZE 100
-
 
 int sp = 0;
 double val[MAXVAL];
@@ -51,14 +50,14 @@ int main(int argc, char *argv[]) {
                         push(atof(argv[i]));
                         break;
                 case '+':
-                        push(pop()+pop());
+                        push(pop() + pop());
                         break;
                 case '*':
-                        push(pop()*pop());
+                        push(pop() * pop());
                         break;
                 case '-':
                         op2 = pop();
-                        push(pop()-op2);
+                        push(pop() - op2);
                         break;
                 case '/':
                         op2 = pop();
@@ -90,18 +89,18 @@ int main(int argc, char *argv[]) {
                         break;
                 case 't':
                         op2 = pop();
-                        printf("\t%-.8g\n",op2);
+                        printf("\t%-.8g\n", op2);
                         push(op2);
                         break;
                 case '\n':
-                        printf("\t%-.8g\n",pop());
+                        printf("\t%-.8g\n", pop());
                         break;
                 default:
-                        printf("error: unknown command %s\n",s);
+                        printf("error: unknown command %s\n", s);
                         break;
 
         }
     }
-    printf("\t%-.8g\n",pop());
+    printf("\t%-.8g\n", pop());
     return 0;
 }
