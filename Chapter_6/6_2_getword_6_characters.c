@@ -65,7 +65,7 @@ struct tnode *addtree(struct tnode *points, char *stored_word, int length, int *
     }
     else if ((cond = compare(stored_word, points, length, find)) == 0)
         points->match++;
-    else if(cond < 0)
+    else if (cond < 0)
         points->left = addtree(points->left, stored_word, length, find);
     else
         points->right = addtree(points->right, stored_word, length, find);
@@ -75,10 +75,10 @@ struct tnode *addtree(struct tnode *points, char *stored_word, int length, int *
 int compare(char *word, struct tnode *points, int length, int *find) {
     int i;
     char *temp = points->word;
-    for(i = 0; *word == *temp; i++, word++, temp++)
-        if(*word == '\0')
+    for (i = 0; *word == *temp; i++, word++, temp++)
+        if (*word == '\0')
             return 0;
-    if(i >= length) {
+    if (i >= length) {
         *find = YES;
         points->match = YES;
     }
@@ -86,7 +86,7 @@ int compare(char *word, struct tnode *points, int length, int *find) {
 }
 
 void treeprint(struct tnode *points) {
-    if(points != NULL) {
+    if (points != NULL) {
         treeprint(points->left);
         printf("%4d %s\n", points->match, points->word);
         treeprint(points->right);
