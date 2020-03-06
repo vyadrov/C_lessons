@@ -20,8 +20,8 @@ struct tnode {  //the tree node
 char buf[BUFSIZE];
 int bufp = 0;
 
-struct tnode *addtree(struct tnode *, char *, int, int *);
-int compare(char *, struct tnode *, int, int *);
+struct tnode *addtree(struct tnode *, char *);
+int compare(char *, struct tnode *);
 struct tnode *talloc(void);
 char *mstrdup(char *);
 void treeprint(struct tnode *);
@@ -32,7 +32,6 @@ int main(int argc, char *argv[]) {
     char word[MAXWORD];
     int length,i;
     i = 0;
-    int find = NO;
     root = NULL;    
     
     if (argc == 1 || argc > 2) {        
@@ -47,41 +46,37 @@ int main(int argc, char *argv[]) {
 
     while (mygetword(word, MAXWORD) != EOF) {
        if (isalpha(word[0]) && strlen(word) >= length)
-            root = addtree(root, word, length, &find);    
+            root = addtree(root, word);    
     }
     printf("Result in alphabetical order:\n");
     treeprint(root);
     return 0;
 }
 
-struct tnode *addtree(struct tnode *points, char *stored_word, int length, int *find) {
+struct tnode *addtree(struct tnode *points, char *stored_word) {
     int cond;
 
     if (points == NULL) { /* new word */
         points = talloc();
         points->word = mstrdup(stored_word);
-        points->match = *find;
+        points->match = 1;
         points->left = points->right = NULL;
     }
-    else if ((cond = compare(stored_word, points, length, find)) == 0)
+    else if ((cond = compare(stored_word, points)) == 0)
         points->match++;
     else if (cond < 0)
-        points->left = addtree(points->left, stored_word, length, find);
+        points->left = addtree(points->left, stored_word);
     else
-        points->right = addtree(points->right, stored_word, length, find);
+        points->right = addtree(points->right, stored_word);
     return points;
 }
 
-int compare(char *word, struct tnode *points, int length, int *find) {
+int compare(char *word, struct tnode *points) {
     int i;
     char *temp = points->word;
     for (i = 0; *word == *temp; i++, word++, temp++)
         if (*word == '\0')
             return 0;
-    if (i >= length) {
-        *find = YES;
-        points->match = YES;
-    }
     return *word - *temp;
 }
 
