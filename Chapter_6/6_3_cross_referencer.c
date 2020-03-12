@@ -46,7 +46,6 @@ void treeprint(struct tnode *);
 int mygetword(char *, int, int *);
 void pushBack(lineNumber **head, int);
 void printLinkedList(const lineNumber *head);
-void deleteList(lineNumber **head);
 lineNumber *getLast(lineNumber *head);
 void mytolowerstr(char *word);
 int is_noise_word(char *word);
