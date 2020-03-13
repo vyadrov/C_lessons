@@ -2,6 +2,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
+#include "lineNumber.h"
 
 #define NKEYS (sizeof(keytab)/sizeof(keytab[0]))
 #define MAXWORD 100
@@ -27,13 +28,8 @@ struct tnode {  //the tree node
     int match; //sign matches
     struct tnode *left; //left child
     struct tnode *right; //right child
-    struct lineNumber *lineNumbers;
+    struct list *lineNumbers;
 };
-
-typedef struct lineNumber {
-    int value;
-    struct lineNumber *next;
-} lineNumber;
 
 char buf[BUFSIZE];
 int bufp = 0;
@@ -44,9 +40,6 @@ struct tnode *talloc(void);
 char *mstrdup(char *);
 void treeprint(struct tnode *);
 int mygetword(char *, int, int *);
-void pushBack(lineNumber **head, int);
-void printLinkedList(const lineNumber *head);
-lineNumber *getLast(lineNumber *head);
 void mytolowerstr(char *word);
 int is_noise_word(char *word);
 
@@ -145,38 +138,6 @@ int mygetword(char *word, int lim, int *line) {
         }
     *pointer_w = '\0';
     return word[0];
-}
-
-void pushBack(lineNumber **head, int value) {
-    if (*head == NULL) {
-        lineNumber *tmp = (lineNumber*) malloc(sizeof(lineNumber));
-        tmp->value = value;
-        tmp->next = NULL;
-        *head = tmp;
-    }
-    else {
-        lineNumber *last = getLast(*head);
-        if (last->value == value)
-            return ;
-        lineNumber *tmp1 = (lineNumber*) malloc(sizeof(lineNumber));
-        tmp1->value = value;
-        tmp1->next = NULL;
-        last->next = tmp1;
-    }
-}
-
-lineNumber *getLast(lineNumber *head) {
-    while(head->next != NULL)
-        head = head->next;
-    return head;
-}
-
-void printLinkedList(const lineNumber *head) {
-    while (head) {
-        printf("%d ", head->value);
-        head = head->next;
-    }
-    printf("\n");
 }
 
 void mytolowerstr(char *word) {
