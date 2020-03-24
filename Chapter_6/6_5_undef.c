@@ -40,40 +40,40 @@ char *strdup(const char *);
 
 /* install: put (name, defn) in hashtab */
 struct nlist *install(char *name, char *defn) {
-    struct nlist *np;
+    struct nlist *newpointer;
     unsigned hashval;
 
-    if ((np = lookup(name)) == NULL)  { /* not found */
-        np = (struct nlist *) malloc(sizeof(*np));
+    if ((newpointer = lookup(name)) == NULL)  { /* not found */
+        newpointer = (struct nlist *) malloc(sizeof(*newpointer));
 
-        if (np == NULL || (np->name = strdup(name)) == NULL)
+        if (newpointer == NULL || (newpointer->name = strdup(name)) == NULL)
             return NULL;
         hashval = hash(name);
-        np->next = hashtab[hashval];
-        hashtab[hashval] = np;
+        newpointer->next = hashtab[hashval];
+        hashtab[hashval] = newpointer;
     } else  /* already there */
-        free((void *) np->defn);    /* free the previous defn */
+        free((void *) newpointer->defn);    /* free the previous defn */
 
-    if ((np->defn = strdup(defn)) == NULL)
+    if ((newpointer->defn = strdup(defn)) == NULL)
         return NULL;
 
-    return np;
+    return newpointer;
 }
 
 int undef(char* name) {
-    struct nlist *np1, *np2;
+    struct nlist *newpointer1, *newpointer2;
     unsigned hashval = hash(name);
     
-    for (np1 = hashtab[hashval], np2 = NULL; np1 != NULL; np2 = np1, np1 = np1->next) {
-        if (strcmp(np1->name, name) == 0) {
-            if (np2 == NULL) {
-                hashtab[hash(name)] = np1->next;
+    for (newpointer1 = hashtab[hashval], newpointer2 = NULL; newpointer1 != NULL; newpointer2 = newpointer1, newpointer1 = newpointer1->next) {
+        if (strcmp(newpointer1->name, name) == 0) {
+            if (newpointer2 == NULL) {
+                hashtab[hash(name)] = newpointer1->next;
             } else {
-                np2->next = np1->next;
+                newpointer2->next = newpointer1->next;
             }
-        free(np1->name);
-        free(np1->defn);
-        free(np1);
+        free(newpointer1->name);
+        free(newpointer1->defn);
+        free(newpointer1);
         return 0;
         }
     }
