@@ -2,9 +2,6 @@
 #include<string.h>
 #include<ctype.h>
 
-/* lower: converts upper case to lower case */
-/* upper: converts lower case to upper case */
-
 int main(int argc,char *argv[]) {
     int c;
 
