@@ -1,4 +1,6 @@
 #include <stdarg.h>
+#include <stdlib.h>
+#include <ctype.h>
 #include <stdio.h>
 
 void minprintf(char *fmt,...) {
@@ -7,6 +9,7 @@ void minprintf(char *fmt,...) {
     int ival;
     unsigned uval;
     double dval;
+    int width, accuracy;
 
     va_start(ap, fmt);
     
@@ -14,6 +17,14 @@ void minprintf(char *fmt,...) {
         if(*p != '%') {
             putchar(*p);
             continue;
+        }
+        if (isdigit(*++p))
+            width = atoi(p);
+        while (isdigit(*p))
+            p++;  
+        if (*p == '.'){
+            if (isdigit(*++p))
+                accuracy = atoi(p);
         }
 
         switch(*++p) {
@@ -23,7 +34,7 @@ void minprintf(char *fmt,...) {
                 break;
             case 'f':
                 dval = va_arg(ap, double);
-                printf("%f", dval);
+                printf("%*.*f", width, accuracy, dval);
                 break;
             case 's':
                 for(sval = va_arg(ap,char *); *sval; sval++)
@@ -42,8 +53,7 @@ void minprintf(char *fmt,...) {
 }
 
 int main(void) {
-    unsigned variable = 36;
-    minprintf("variable %d in oct system is: %o\n", variable, variable);
-    
+    double dval = 5.87878787;
+    minprintf("%4.2f\n", dval);
     return 0;
 }
