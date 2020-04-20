@@ -11,6 +11,8 @@ void minscanf(char *fmt,...) {
     int *ival;
     unsigned *uval;
     float *dval;
+    int width;
+    char format[MAXCHARS];
 
     va_start(ap, fmt);
     
@@ -18,8 +20,12 @@ void minscanf(char *fmt,...) {
         if(*p != '%') {
             continue;
         }
+        if (isdigit(*++p))
+            width = atoi(p);
+        while (isdigit(*p))
+            p++;
         
-        switch(*++p) {
+        switch(*p) {
             case 'd':
                 ival = va_arg(ap, int *);
                 scanf("%d", ival);
@@ -30,7 +36,8 @@ void minscanf(char *fmt,...) {
                 break;
             case 's':
                 sval = va_arg(ap, char *);
-                    scanf("%s", sval);
+                sprintf(format, "%%%ds", width);
+                scanf(format, sval);
                 break;
             case 'o':
                 uval = va_arg(ap, unsigned *);
@@ -45,6 +52,7 @@ void minscanf(char *fmt,...) {
 
 int main() {
     
+    
     int scan;
     float scan1;
     char scan2[MAXCHARS];
@@ -56,7 +64,7 @@ int main() {
     minscanf("%f", &scan1);
     printf("Your scanned number is: %f\n", scan1);
     printf("Please enter any word: \n");
-    minscanf("%s", scan2);
+    minscanf("%7s", scan2);
     printf("Your scanned word is: %s\n", scan2);
     printf("Please enter any number in oct system:\n");
     minscanf("%o", &scan3);
