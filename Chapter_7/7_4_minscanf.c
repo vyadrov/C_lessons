@@ -7,7 +7,7 @@
 
 void minscanf(char *fmt,...) {
     va_list ap;
-    char *p,*sval;
+    char *p, *sval;
     int *ival;
     unsigned *uval;
     float *dval;
@@ -28,7 +28,13 @@ void minscanf(char *fmt,...) {
         switch(*p) {
             case 'd':
                 ival = va_arg(ap, int *);
-                scanf("%d", ival);
+                sval = malloc(sizeof(char) * 100);
+                scanf("%s", sval);
+                if (isdigit(sval[0]) || sval[0] == '-')
+                    *ival = atoi(sval);
+                else
+                    printf("Faulty argument\n");
+                free(sval);
                 break;
             case 'f':
                 dval = va_arg(ap, float *);
