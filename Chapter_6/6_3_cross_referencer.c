@@ -43,7 +43,7 @@ int mygetword(char *, int, int *);
 void mytolowerstr(char *word);
 int is_noise_word(char *word);
 
-struct tnode *addtree(struct tnode *points, char *stored_word, int lineNumber) {
+struct tnode *addtree(struct tnode *points, char *stored_word, int list) {
     int cond;
 
     if (points == NULL) { /* new word */
@@ -51,17 +51,17 @@ struct tnode *addtree(struct tnode *points, char *stored_word, int lineNumber) {
         points->word = mstrdup(stored_word);
         points->match = 1;
         points->lineNumbers = NULL;
-        pushBack(&points->lineNumbers, lineNumber);
+        pushBack(&points->lineNumbers, list);
         points->left = points->right = NULL;
     }
     else if ((cond = compare(stored_word, points)) == 0) {
         points->match++;
-        pushBack(&points->lineNumbers, lineNumber);
+        pushBack(&points->lineNumbers, list);
     }
     else if (cond < 0)
-        points->left = addtree(points->left, stored_word, lineNumber);
+        points->left = addtree(points->left, stored_word, list);
     else
-        points->right = addtree(points->right, stored_word, lineNumber);
+        points->right = addtree(points->right, stored_word, list);
     return points;
 }
 
