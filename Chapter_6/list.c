@@ -1,26 +1,26 @@
-#include <stdio.h>
+ #include <stdio.h>
 #include <stdlib.h>
 #include "list.h"
 
-void pushBack(lineNumber **head, int value) {
+void pushBack(list **head, int value) {
     if (*head == NULL) {
-        lineNumber *tmp = (lineNumber*) malloc(sizeof(lineNumber));
+        list *tmp = (list*) malloc(sizeof(list));
         tmp->value = value;
         tmp->next = NULL;
         *head = tmp;
     }
     else {
-        lineNumber *last = getLast(*head);
+        list *last = getLast(*head);
         if (last->value == value)
             return ;
-        lineNumber *tmp1 = (lineNumber*) malloc(sizeof(lineNumber));
+        list *tmp1 = (list*) malloc(sizeof(list));
         tmp1->value = value;
         tmp1->next = NULL;
         last->next = tmp1;
     }
 }
 
-void printLinkedList(const lineNumber *head) {
+void printLinkedList(const list *head) {
     while (head) {
         printf("%d ", head->value);
         head = head->next;
@@ -28,7 +28,7 @@ void printLinkedList(const lineNumber *head) {
     printf("\n");
 }
 
-lineNumber *getLast(lineNumber *head) {
+list *getLast(list *head) {
     while(head->next != NULL)
         head = head->next;
     return head;

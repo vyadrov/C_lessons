@@ -1,8 +1,8 @@
 typedef struct list {
     int value;
     struct list *next;
-} lineNumber;
+} list;
 
-lineNumber *getLast(lineNumber *head);
-void pushBack(lineNumber **head, int);
-void printLinkedList(const lineNumber *head);
+list *getLast(list *head);
+void pushBack(list **head, int);
+void printLinkedList(const list *head);
