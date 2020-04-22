@@ -2,7 +2,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
-#include "lineNumber.h"
+#include "list.h"
 
 #define NKEYS (sizeof(keytab)/sizeof(keytab[0]))
 #define MAXWORD 100
