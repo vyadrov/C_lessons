@@ -63,7 +63,7 @@ struct nlist *install(char *name, char *defn) {
 int undef(char* name) {
     struct nlist *newpointer1, *newpointer2;
     unsigned hashval = hash(name);
-    
+    printf("Now we are undefinding fields %s\n", name);
     for (newpointer1 = hashtab[hashval], newpointer2 = NULL; newpointer1 != NULL; newpointer2 = newpointer1, newpointer1 = newpointer1->next) {
         if (strcmp(newpointer1->name, name) == 0) {
             if (newpointer2 == NULL) {
@@ -83,6 +83,9 @@ int undef(char* name) {
 
 int main(int argc, char *argv[]) {
     int i;
+    struct nlist *element;
+    struct nlist *temp;
+    struct nlist *next;
     install("id", "Savenok");
     install("id1", "Denkin");
     install("id2", "Iadrov");
@@ -93,6 +96,14 @@ int main(int argc, char *argv[]) {
     printf("Finding: id - %s, id1 - %s, id2 - %s, id3 - %s, id4 - %s, id5 - %s\n", lookup("id")->defn, lookup("id1")->defn, lookup("id2")->defn, lookup("id3")->defn, lookup("id4")->defn, lookup("id5")->defn);
     printf("Undefing %s - res %d\n", "id3", undef("id3"));
     printf("Finding: id - %p, id - %p, id2 - %p, id3 - %p, id4 - %p, id5 - %p\n", lookup("id"), lookup("id1"), lookup("id2"), lookup("id3"), lookup("id4"), lookup("id5"));
+    for (i = 0; i < HASHSIZE; i++){
+        element = hashtab[i];
+        while (element) {
+            temp = element->next;
+            undef(element->name);
+            element = temp;
+        }
+    }
 
     return 0;
 }
