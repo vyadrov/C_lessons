@@ -43,7 +43,7 @@ void printfpages(FILE *ifp, FILE *ofp) {
             }
         }        
     }
-    if (c == EOF && line != 0) {
+    if (c == EOF && line == LINESPERPAGE - 1) {
         fprintf(stdout, "\nEnd of Page %d\n\n", page);
     }
 }
