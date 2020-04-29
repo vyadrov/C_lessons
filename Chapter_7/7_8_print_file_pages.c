@@ -41,6 +41,9 @@ void printfpages(FILE *ifp, FILE *ofp) {
                 page += 1;
                 line = 0;
             }
-        }
+        }        
     }
+    if (c == EOF) {
+            fprintf(stdout, "\nEnd of Page %d\n\n", page);
+        }
 }
