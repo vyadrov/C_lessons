@@ -9,19 +9,19 @@ int main(int argc, char *argv[]) {
     if (argc == 1)
         filecopy(stdin, stdout);
     else
-        while (--argc > 0)
-            start = clock();
+        start = clock();
+        while (--argc > 0)            
             if ((fp = fopen(*++argv, "r")) == NULL) {
                 printf("cat: Can't open file %s\n", *argv);
                 return 1;
             }
             else {
                 filecopy(fp, stdout);
-                fclose(fp);
-                end = clock();
-                printf("=========================================================================================================\n");
-                printf("The above code block was executed in %.7f seconds\n", ((double) end - start) / ((double) CLOCKS_PER_SEC));
+                fclose(fp);                
             }
+        end = clock();
+        printf("=========================================================================================================\n");
+        printf("The above code block was executed in %.7f seconds\n", ((double) end - start) / ((double) CLOCKS_PER_SEC));
 
     return 0;
 }

@@ -14,18 +14,20 @@ int main(int argc, char *argv[]) {
     if (argc == 1)
         filecopy(0, 1);
     else
+        start = clock();
         while (--argc > 0)
-            start = clock();
+            
             if ((fd = open(*++argv, O_RDONLY)) == -1) {
                 printf("cat: Can't open file %s\n", *argv);
                 return 1;
             }
             else {
                 filecopy(fd, 1);
-                close(fd);
-                end = clock();
-                printf("The above code block was executed in %.4f second(s)\n", ((double) end - start) / ((double) CLOCKS_PER_SEC));
+                close(fd);                
             }
+        end = clock();
+        printf("=========================================================================================================\n");
+        printf("The above code block was executed in %.7f seconds\n", ((double) end - start) / ((double) CLOCKS_PER_SEC));
 
     return 0;
 }
