@@ -10,7 +10,7 @@
 
 #define NULL 0
 #define EOF (-1)
-#define BUFSIZ 1024
+#define BUFSIZ 2048
 #define OPEN_MAX 20 /* max # files open at once */
 
 typedef struct _iobuf {
@@ -119,9 +119,6 @@ int _flushbuf(int c, FILE *f) {
     int num_written, bufsize;
     unsigned char uc = c;
 
-    if (f < _iob || f >= _iob + OPEN_MAX)
-        return EOF;
-
     if ((f->flag & (_WRITE | _EOF | _ERR)) != _WRITE) {
         return EOF;
     }
@@ -129,20 +126,30 @@ int _flushbuf(int c, FILE *f) {
     if (f->base == NULL) {
         if ((f->base = malloc(BUFSIZ)) == NULL) {
             f->flag |= _ERR;
-        	return EOF;
+            return EOF;
         } else {
             f->ptr = f->base;
             f->cnt = BUFSIZ - 1;
         }
     }
 
-    bufsize = (int)(f->ptr - f->base);
-    num_written = write(f->fd, f->base, bufsize);
-    f->ptr = f->base;
-    f->cnt = BUFSIZ - 1;    
+    if (f->flag & _UNBUF) {
+        f->ptr = f->base = NULL;
+        f->cnt = 0;
+        if (c == EOF) {
+            return EOF;
+        }
+        num_written = write(f->fd, &uc, 1);
+        bufsize = 1;
+    } else {
+        bufsize = (int)(f->ptr - f->base);
+        num_written = write(f->fd, f->base, bufsize);
+        f->ptr = f->base;
+        f->cnt = BUFSIZ - 1;
+    }
 
     if (num_written != bufsize) {
-    	f->flag |= _ERR;
+        f->flag |= _ERR;
         return EOF;        
     } else {
         return c;
