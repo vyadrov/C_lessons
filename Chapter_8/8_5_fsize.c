@@ -6,13 +6,16 @@
 #include <sys/stat.h>
 #include <dirent.h>
 #include <unistd.h>
+#include <time.h>
 #include "list.h"
 
 MYDIR *myopendir(char *dirname);
 Dirent *myreaddir(MYDIR *dfd);
 
 void fsize(char *name) {
+    char buf[80];
     struct stat stbuf;
+    struct tm ts;    
 
     if (stat(name, &stbuf) == -1) {
         fprintf(stderr, "fsize: can't access %s\n", name);
@@ -22,7 +25,9 @@ void fsize(char *name) {
     if ((stbuf.st_mode & S_IFMT) == S_IFDIR)
         dirwalk(name, fsize);
 
-    printf("%8ld %s\n%u %ld\n", stbuf.st_size, name,  stbuf.st_uid,stbuf.st_mtime);
+    ts = *localtime(&stbuf.st_mtime);
+    strftime(buf, sizeof(buf), "%a %Y-%m-%d %H:%M:%S %Z", &ts);
+    printf("%8ld %s\n%u %s\n", stbuf.st_size, name, stbuf.st_uid, buf);
 }
 
 void dirwalk(char *dir, void (*fcn)(char *)) {
