@@ -56,18 +56,18 @@ int main(void) {
 }
 
 void *mod_calloc(size_t num, size_t size) {
-	void *result = NULL;
-	result = malloc(num * size);
-	memset(result, 0, num * size);
+    void *result = NULL;
+    result = malloc(num * size);
+    memset(result, 0, num * size);
 }
 
 static void bfree(void *p, unsigned n) {
 
-	Header *bp;
+    Header *bp;
     if (n < sizeof(Header))
-    	return;
-	
-	bp = (Header *)p;
-	bp->s.size = n / sizeof(Header);
-	free(bp + 1);
+        return;
+    
+    bp = (Header *)p;
+    bp->s.size = n / sizeof(Header);
+    free(bp + 1);
 }
