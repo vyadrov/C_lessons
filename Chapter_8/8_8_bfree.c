@@ -49,10 +49,10 @@ int main(void) {
   		bfree(a, sizeof *a);
   	}
 
-  	b = mod_calloc(SIZE, sizeof *b);  
+	b = mod_calloc(SIZE, sizeof *b);  
     printf("Successful\n");
     free(b);
-  	return 0;
+	return 0;
 }
 
 void *mod_calloc(size_t num, size_t size) {
