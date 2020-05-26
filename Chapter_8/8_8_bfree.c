@@ -34,25 +34,25 @@ int main(void) {
     char *b;
   	int i = 0;
 	
-  	a = mod_calloc(SIZE, sizeof *a);
+    a = mod_calloc(SIZE, sizeof *a);
 
-  	if (a == NULL) { 
-  		printf("Memory cannot be allocated\n");
+    if (a == NULL) { 
+        printf("Memory cannot be allocated\n");
   	} else {
-  		for (i = 0; i < SIZE; i++) {
-  			printf("%d ", a[i]);
-  			if (i % NUMBERS_PER_STRING == (NUMBERS_PER_STRING - 1)) {
-				printf("\n");
+        for (i = 0; i < SIZE; i++) {
+            printf("%d ", a[i]);
+            if (i % NUMBERS_PER_STRING == (NUMBERS_PER_STRING - 1)) {
+                printf("\n");			
   			}
   		}
   		printf("\n");
-  		bfree(a, sizeof *a);
+        bfree(a, sizeof *a);  	
   	}
 
-	b = mod_calloc(SIZE, sizeof *b);  
+    b = mod_calloc(SIZE, sizeof *b);  
     printf("Successful\n");
     free(b);
-	return 0;
+    return 0;
 }
 
 void *mod_calloc(size_t num, size_t size) {
