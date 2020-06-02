@@ -7,7 +7,7 @@
 #define BUF_LENGTH 50
 #define MAX_VARIANT 5
 
-char* f_name = "file.dat";
+char* file_name = "file.dat";
 int id = 1;
 
 typedef struct employee {
@@ -23,8 +23,8 @@ void find_employee_by_lastname(employee_t* head);
 void scan_employee_data(employee_t** head);
 void printheader();
 int get_variant(int count);
-int save(char* f_name, struct employee* p);
-int load(char* f_name, employee_t** head);
+int save(char* file_name, struct employee* p);
+int load(char* file_name, employee_t** head);
 
 void scan_employee_data(employee_t** head) {
     int year;
@@ -41,7 +41,7 @@ void scan_employee_data(employee_t** head) {
     }
 
     e = add_employee(head, lastname, id, year);
-    save(f_name, e);
+    save(file_name, e);
 }
 
 employee_t *add_employee(employee_t** head, char* lastname, int id, int year) {
@@ -101,11 +101,11 @@ employee_t *find_employee_by_id(employee_t* head, int id) {
     return tmp;
 }
 
-int save(char* f_name, struct employee* p)
+int save(char* file_name, struct employee* p)
 {
     FILE* fp;
 
-    if ((fp = fopen(f_name, "a+t")) == NULL) {
+    if ((fp = fopen(file_name, "a+t")) == NULL) {
         perror("Error occured while opening file");
         return 1;
     }
@@ -115,7 +115,8 @@ int save(char* f_name, struct employee* p)
     return 0;
 }
 
-int load(char* f_name, employee_t** head) {
+int load(char* file_name, employee_t** head) {
+    FILE* fp;
     char ch;
     char buff[BUF_LENGTH];
     int i;
@@ -126,7 +127,7 @@ int load(char* f_name, employee_t** head) {
 
     printheader();
     
-    if ((fp = fopen(f_name, "rb")) == NULL) {
+    if ((fp = fopen(file_name, "rb")) == NULL) {
         perror("Error occured while opening file");
         return 1;
     }
@@ -199,7 +200,7 @@ int main() {
     int temp_id;
     employee_t *tmp;
 
-    load(f_name, &ptr_head);
+    load(file_name, &ptr_head);
     
     do {
         print_menu();
@@ -212,7 +213,7 @@ int main() {
             break;
 
         case 2:
-            load(f_name, &ptr_head);
+            load(file_name, &ptr_head);
             break;
 
         case 3:
