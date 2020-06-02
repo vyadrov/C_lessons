@@ -18,13 +18,13 @@ typedef struct employee {
 } employee_t;
 
 employee_t *add_employee(employee_t** head, char* lastname, int id, int year);
+employee_t *find_employee_by_id(employee_t* head, int id);
 void find_employee_by_lastname(employee_t* head);
 void scan_employee_data(employee_t** head);
-employee_t *find_employee_by_id(employee_t* head, int id);
+void printheader();
 int get_variant(int count);
 int save(char* f_name, struct employee* p);
 int load(char* f_name, employee_t** head);
-void printheader();
 
 void scan_employee_data(employee_t** head) {
     int year;
@@ -116,17 +116,13 @@ int save(char* f_name, struct employee* p)
 }
 
 int load(char* f_name, employee_t** head) {
-    FILE* fp;
     char ch;
     char buff[BUF_LENGTH];
     int i;
     char* tok;
     int id;
     int year;
-    char* lastname;
-    employee_t* e;
-    employee_t* tmp;
-    tmp = *head;
+    char* lastname;    
 
     printheader();
     
@@ -153,7 +149,7 @@ int load(char* f_name, employee_t** head) {
             year = atoi(tok);
             printf("| %4d |\n", year);
 
-	    	add_employee(head, lastname, id, year);
+            add_employee(head, lastname, id, year);
         
             i = 0;
             continue;
