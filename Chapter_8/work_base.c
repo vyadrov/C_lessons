@@ -4,10 +4,11 @@
 #include <fcntl.h>
 
 #define VARIANT_NUMBER 100
-#define BUF_LENGTH 20
+#define BUF_LENGTH 50
 #define MAX_VARIANT 5
 
 char* f_name = "file.dat";
+int id = 1;
 
 typedef struct employee {
     char* lastname;
@@ -16,30 +17,34 @@ typedef struct employee {
     struct employee* next;
 } employee_t;
 
-int add_employee(employee_t** head, char* lastname, int id, int year);
-void find_emplyee_by_lastname(employee_t* head);
+employee_t *add_employee(employee_t** head, char* lastname, int id, int year);
+void find_employee_by_lastname(employee_t* head);
 void scan_employee_data(employee_t** head);
-void find_employee_by_id(employee_t* head);
-void print_employees(employee_t* head);
+employee_t *find_employee_by_id(employee_t* head, int id);
 int get_variant(int count);
 int save(char* f_name, struct employee* p);
-int load(char* f_name);
+int load(char* f_name, employee_t** head);
+void printheader();
 
 void scan_employee_data(employee_t** head) {
-    int id;
     int year;
     char lastname[BUF_LENGTH];
+    employee_t *e = NULL;
 
     printf("Please enter last name for new employee: ");
     scanf("%s", &lastname[0]);
-    printf("Please enter id for new employee: ");
-    scanf("%d", &id);
     printf("Please enter year of birth for new employee: ");
     scanf("%d", &year);
-    add_employee(head, lastname, id, year);
+
+    while ((e = find_employee_by_id(*head, id)) != NULL) {
+		id += 1;
+    }
+
+    e = add_employee(head, lastname, id, year);
+    save(f_name, e);
 }
 
-int add_employee(employee_t** head, char* lastname, int id, int year) {
+employee_t *add_employee(employee_t** head, char* lastname, int id, int year) {
     employee_t* e;
     employee_t* tmp;
     tmp = *head;
@@ -60,7 +65,7 @@ int add_employee(employee_t** head, char* lastname, int id, int year) {
         tmp->next = e;
     }
 
-    save(f_name, e);
+    return e;
 }
 
 void find_employee_by_lastname(employee_t* head) {
@@ -71,11 +76,13 @@ void find_employee_by_lastname(employee_t* head) {
     printf("Please enter employee's last name for finding: ");
     scanf("%s", temp_lastname);
 
+    printheader();
+
     while (tmp != NULL && strcmp(tmp->lastname, temp_lastname)) {
         tmp = tmp->next;
     }
     if (tmp != NULL) {
-        printf("| %20s | %11d | %4d |\n", tmp->lastname, tmp->id, tmp->year);
+        printf("| %19s | %11d | %4d |\n", tmp->lastname, tmp->id, tmp->year);
         printf("+---------------------+-------------+------+\n");
     }
     else {
@@ -83,23 +90,15 @@ void find_employee_by_lastname(employee_t* head) {
     }
 }
 
-void find_employee_by_id(employee_t* head) {
+employee_t *find_employee_by_id(employee_t* head, int id) {
     employee_t* tmp;
-    int temp_id;
     tmp = head;
-    printf("Please enter employee's ID number for finding: ");
-    scanf("%d", &temp_id);
 
-    while (tmp != NULL && (tmp->id != temp_id)) {
+    while (tmp != NULL && (tmp->id != id)) {
         tmp = tmp->next;
     }
-    if (tmp != NULL) {
-        printf("| %20s | %11d | %4d |\n", tmp->lastname, tmp->id, tmp->year);
-        printf("+---------------------+-------------+------+\n");
-    }
-    else {
-        printf("Emploee with id #%d is not found\n", temp_id);
-    }
+    
+    return tmp;
 }
 
 int save(char* f_name, struct employee* p)
@@ -110,36 +109,62 @@ int save(char* f_name, struct employee* p)
         perror("Error occured while opening file");
         return 1;
     }
-
-    fprintf(fp, "| %19s | %11d | %4d |\n", p->lastname, p->id, p->year);
+    
+    fprintf(fp, "%s %d %d\n", p->lastname, p->id, p->year);
     fclose(fp);
     return 0;
 }
 
-int load(char* f_name) {
+int load(char* f_name, employee_t** head) {
     FILE* fp;
-    char* c;
-    char i;
-    int size = sizeof(struct employee);
-    struct employee* ptr = (struct employee*)malloc(size);
-    c = (char*)ptr;
+    char ch;
+    char buff[BUF_LENGTH];
+    int i;
+    char* tok;
+    int id;
+    int year;
+    char* lastname;
+    employee_t* e;
+    employee_t* tmp;
+    tmp = *head;
 
+    printheader();
+    
     if ((fp = fopen(f_name, "rb")) == NULL) {
         perror("Error occured while opening file");
         return 1;
     }
 
-    printf("+---------------------+-------------+------+\n");
-    printf("|         Employee    |    ID       | Year |\n");
-    printf("+---------------------+-------------+------+");
+    i = 0;
+    while ((ch = getc(fp)) != EOF) {
 
-    while ((i = getc(fp)) != EOF) {
-        printf("%c", i);
+        if (ch == '\n') {
+            buff[i] = '\0';
+
+            tok = strtok(buff, " ");
+            lastname = strdup(tok);
+            printf("| %19s ", lastname);
+
+            tok = strtok(NULL, " ");
+            id = atoi(tok);
+            printf("| %11d ", id);
+
+            tok = strtok(NULL, " ");
+            year = atoi(tok);
+            printf("| %4d |\n", year);
+
+	    	add_employee(head, lastname, id, year);
+        
+            i = 0;
+            continue;
+        }
+
+        buff[i] = ch;
+        i += 1;
     }
 
     fclose(fp);
     printf("+---------------------+-------------+------+\n");
-    free(ptr);
     return 0;
 }
 
@@ -156,6 +181,12 @@ int get_variant(int count) {
     return variant;
 }
 
+void printheader() {
+    printf("+---------------------+-------------+------+\n");
+    printf("|         Employee    |    ID       | Year |\n");
+    printf("+---------------------+-------------+------+\n");
+}
+
 void print_menu() {
     printf("Employee database\n");
     printf("1. Add new employee\n");
@@ -169,7 +200,11 @@ void print_menu() {
 int main() {
     employee_t* ptr_head = NULL;
     int var;
+    int temp_id;
+    employee_t *tmp;
 
+    load(f_name, &ptr_head);
+    
     do {
         print_menu();
 
@@ -181,7 +216,7 @@ int main() {
             break;
 
         case 2:
-            load(f_name);
+            load(f_name, &ptr_head);
             break;
 
         case 3:
@@ -189,7 +224,17 @@ int main() {
             break;
 
         case 4:
-            find_employee_by_id(ptr_head);
+    	    printf("Please enter employee's ID number for finding: ");
+    	    scanf("%d", &temp_id);
+
+    	    printheader();
+            tmp = find_employee_by_id(ptr_head, temp_id);
+	    if (!tmp) {
+                printf("Emploee with id #%d is not found\n", temp_id);
+	    } else {
+                printf("| %19s | %11d | %4d |\n", tmp->lastname, tmp->id, tmp->year);
+                printf("+---------------------+-------------+------+\n");
+	    }
             break;
         }
 
