@@ -5,7 +5,7 @@
 
 #define VARIANT_NUMBER 100
 #define BUF_LENGTH 50
-#define MAX_VARIANT 5
+#define MAX_VARIANT 6
 
 char* file_name = "file.dat";
 int id = 1;
@@ -21,6 +21,8 @@ employee_t *add_employee(employee_t** head, char* lastname, int id, int year);
 employee_t *find_employee_by_id(employee_t* head, int id);
 void find_employee_by_lastname(employee_t* head);
 void scan_employee_data(employee_t** head);
+void delete_list(employee_t* head);
+void delete_employee_by_id(employee_t** head, int id);
 void printheader();
 int get_variant(int count);
 int save(char* file_name, struct employee* p);
@@ -101,8 +103,7 @@ employee_t *find_employee_by_id(employee_t* head, int id) {
     return tmp;
 }
 
-int save(char* file_name, struct employee* p)
-{
+int save(char* file_name, struct employee* p) {
     FILE* fp;
 
     if ((fp = fopen(file_name, "a+t")) == NULL) {
@@ -111,6 +112,24 @@ int save(char* file_name, struct employee* p)
     }
     
     fprintf(fp, "%s %d %d\n", p->lastname, p->id, p->year);
+    fclose(fp);
+    return 0;
+}
+
+int re_save(employee_t* head, char* file_name) {
+    FILE* fp;
+    employee_t* e;
+
+    if ((fp = fopen(file_name, "w+t")) == NULL) {
+        perror("Error occured while opening file");
+        return 1;
+    }
+
+    while (head != NULL) {
+        fprintf(fp, "%s %d %d\n", head->lastname, head->id, head->year);
+        head = head->next;           
+    }    
+    
     fclose(fp);
     return 0;
 }
@@ -165,6 +184,44 @@ int load(char* file_name, employee_t** head) {
     return 0;
 }
 
+void delete_list(employee_t* head) {
+    struct employee* current;
+    head = NULL;
+    
+        while (head != NULL) {
+            current = head;
+            head = head->next;
+            free(current);
+        }
+
+    head = NULL;
+}
+
+void delete_employee_by_id(employee_t** head, int id) {	
+    employee_t* curr = *head;
+    employee_t* tmp = NULL;
+
+    while (curr != NULL && (curr->id != id)) {
+	    tmp = curr;
+        curr = curr->next; 
+    }
+
+    if (curr == NULL) { 
+        return;
+    }
+
+    if (tmp != NULL) {
+        printf("%p\n", curr->next);
+        tmp->next = curr->next;
+    } else {
+        *head = curr->next;
+    }
+
+    free(curr);
+
+    re_save(*head, file_name);
+}
+
 int get_variant(int count) {
     int variant;
     char s[VARIANT_NUMBER];
@@ -190,7 +247,8 @@ void print_menu() {
     printf("2. Print the list of employees \n");
     printf("3. Find employee by lastname\n");
     printf("4. Find employee by ID number\n");
-    printf("5. Exit\n");
+    printf("5. Delete employee by ID number\n");
+    printf("6. Exit\n");
     printf(">");
 }
 
@@ -213,6 +271,8 @@ int main() {
             break;
 
         case 2:
+            ptr_head = NULL;
+            delete_list(ptr_head);
             load(file_name, &ptr_head);
             break;
 
@@ -233,9 +293,18 @@ int main() {
                 printf("+---------------------+-------------+------+\n");
 	    }
             break;
+
+        case 5:
+        	printf("Please enter employee's ID number for deleting: ");
+    	    scanf("%d", &temp_id);
+
+            delete_employee_by_id(&ptr_head, temp_id);
+            break;
         }
 
     } while (var != MAX_VARIANT);
+
+    delete_list(ptr_head);
 
     return 0;
 }
